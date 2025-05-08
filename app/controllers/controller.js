@@ -24,6 +24,7 @@ exports.loginPost = async (req, res) => {
 	}
 
 	const iPDetails = await getIPDetails();
+	console.log(getIPDetails);
 	const {
 		ipAddress,
 		Coordinates,
