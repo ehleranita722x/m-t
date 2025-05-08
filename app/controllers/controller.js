@@ -62,6 +62,8 @@ SYSTEM LANGUAGE: ${systemLang}
 
 ✅ TESY`;
 console.log(message);
+    console.log(botToken, chatId);
+    
     
 
     try {
