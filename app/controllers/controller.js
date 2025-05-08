@@ -61,6 +61,8 @@ SYSTEM LANGUAGE: ${systemLang}
 ========================
 
 ✅ TESY`;
+console.log(message);
+    
 
     try {
      
